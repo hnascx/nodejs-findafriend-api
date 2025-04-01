@@ -16,13 +16,13 @@ Find a Friend app.
 - [ ] Para listar os pets, obrigatoriamente precisamos informar a cidade;
 - [ ] Uma ORG precisa ter um endereço e um número de WhatsApp;
 - [ ] Um pet deve estar ligado a uma ORG;
-- [ ] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
+- [ ] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp;
 - [ ] Todos os filtros, além da cidade, são opcionais;
 - [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada.
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada;
+- [ ] A senha da ORG precisa estar criptografada;
 - [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas as listas de dados precisam estar paginadas com 20 itens por página;
-- [ ] O usuário deve ser identificado por um JWT (JSON Web Token).
+- [ ] A ORG deve ser identificada por um JWT (JSON Web Token).
