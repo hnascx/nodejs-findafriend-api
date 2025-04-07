@@ -1,5 +1,4 @@
-import { prisma } from '@/lib/prisma'
-import { hash } from 'bcryptjs'
+import { registerOrgUseCase } from '@/use-cases/register-org'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -19,28 +18,18 @@ export async function registerOrg(
   const { name, email, zipCode, address, whatsapp, password } =
     registerBodySchema.parse(request.body)
 
-  const password_hash = await hash(password, 6)
-
-  const orgWithSameEmail = await prisma.org.findUnique({
-    where: {
-      email,
-    },
-  })
-
-  if (orgWithSameEmail) {
-    return reply.status(409).send()
-  }
-
-  await prisma.org.create({
-    data: {
+  try {
+    await registerOrgUseCase({
       name,
       email,
-      zip_code: zipCode,
+      zipCode,
       address,
       whatsapp,
-      password_hash,
-    },
-  })
+      password,
+    })
+  } catch (error) {
+    return reply.status(409).send()
+  }
 
   return reply.status(201).send()
 }
