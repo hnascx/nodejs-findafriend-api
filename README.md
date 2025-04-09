@@ -22,7 +22,7 @@ Find a Friend app.
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha da ORG precisa estar criptografada;
-- [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [x] A senha da ORG precisa estar criptografada;
+- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas as listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] A ORG deve ser identificada por um JWT (JSON Web Token).
