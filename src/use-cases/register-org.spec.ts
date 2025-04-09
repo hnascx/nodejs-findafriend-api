@@ -1,15 +1,20 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { RegisterOrgUseCase } from './register-org'
 import { compare } from 'bcryptjs'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
-describe('Register Org Use Case', () => {
-  it('should be able to register', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerOrgUseCase = new RegisterOrgUseCase(orgsRepository)
+let orgsRepository: InMemoryOrgsRepository
+let sut: RegisterOrgUseCase
 
-    const { org } = await registerOrgUseCase.execute({
+describe('Register Org Use Case', () => {
+  beforeEach(() => {
+    orgsRepository = new InMemoryOrgsRepository()
+    sut = new RegisterOrgUseCase(orgsRepository)
+  })
+
+  it('should be able to register', async () => {
+    const { org } = await sut.execute({
       name: 'John Doe',
       email: 'VxH4d@example.com',
       zipCode: '12345678',
@@ -22,10 +27,7 @@ describe('Register Org Use Case', () => {
   })
 
   it('should hash org password upon registration', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerOrgUseCase = new RegisterOrgUseCase(orgsRepository)
-
-    const { org } = await registerOrgUseCase.execute({
+    const { org } = await sut.execute({
       name: 'John Doe',
       email: 'VxH4d@example.com',
       zipCode: '12345678',
@@ -43,12 +45,9 @@ describe('Register Org Use Case', () => {
   })
 
   it('should not be able to register with same email twice', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerOrgUseCase = new RegisterOrgUseCase(orgsRepository)
-
     const email = 'VxH4d@example.com'
 
-    await registerOrgUseCase.execute({
+    await sut.execute({
       name: 'John Doe',
       email,
       zipCode: '12345678',
@@ -58,7 +57,7 @@ describe('Register Org Use Case', () => {
     })
 
     await expect(() =>
-      registerOrgUseCase.execute({
+      sut.execute({
         name: 'John Doe',
         email,
         zipCode: '12345678',

@@ -1,14 +1,19 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { AuthenticateOrgUseCase } from './authenticate-org'
 import { hash } from 'bcryptjs'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
-describe('Authenticate Org Use Case', () => {
-  it('should be able to authenticate', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const sut = new AuthenticateOrgUseCase(orgsRepository)
+let orgsRepository: InMemoryOrgsRepository
+let sut: AuthenticateOrgUseCase
 
+describe('Authenticate Org Use Case', () => {
+  beforeEach(() => {
+    orgsRepository = new InMemoryOrgsRepository()
+    sut = new AuthenticateOrgUseCase(orgsRepository)
+  })
+
+  it('should be able to authenticate', async () => {
     await orgsRepository.create({
       name: 'John Doe',
       email: 'VxH4d@example.com',
@@ -27,9 +32,6 @@ describe('Authenticate Org Use Case', () => {
   })
 
   it('should not be able to authenticate with wrong email', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const sut = new AuthenticateOrgUseCase(orgsRepository)
-
     expect(() =>
       sut.execute({
         email: 'VxH4d@example.com',
@@ -39,9 +41,6 @@ describe('Authenticate Org Use Case', () => {
   })
 
   it('should not be able to authenticate with wrong password', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const sut = new AuthenticateOrgUseCase(orgsRepository)
-
     await orgsRepository.create({
       name: 'John Doe',
       email: 'VxH4d@example.com',
