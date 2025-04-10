@@ -1,5 +1,5 @@
-import type { Org, Prisma } from '@prisma/client'
-import type { OrgsRepository } from '../orgs-repository'
+import { Org, Prisma } from '@prisma/client'
+import { OrgsRepository } from '../orgs-repository'
 import { randomUUID } from 'node:crypto'
 
 export class InMemoryOrgsRepository implements OrgsRepository {
@@ -27,7 +27,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
 
   async create(data: Prisma.OrgCreateInput) {
     const org = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       name: data.name,
       email: data.email,
       zip_code: data.zip_code,
