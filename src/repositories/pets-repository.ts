@@ -21,5 +21,6 @@ export type CreatePetData = {
 }
 
 export interface PetsRepository {
+  findById(id: string): Promise<Pet | null>
   create(data: CreatePetData): Promise<Pet>
 }
