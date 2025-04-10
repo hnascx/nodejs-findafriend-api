@@ -5,6 +5,16 @@ import type { PetsRepository, CreatePetData } from '../pets-repository'
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
 
+  async findById(id: string) {
+    const pet = this.items.find((item) => item.id === id)
+
+    if (!pet) {
+      return null
+    }
+
+    return pet
+  }
+
   async create(data: CreatePetData): Promise<Pet> {
     const pet: Pet = {
       id: randomUUID(),
