@@ -32,7 +32,7 @@ describe('Get Org Profile Use Case', () => {
     expect(org.name).toEqual('Cãonil da Seda')
   })
 
-  it('should not be able to get org profile with wrong id', async () => {
+  it('should not be able to get user profile with wrong id', async () => {
     expect(() =>
       sut.execute({
         orgId: 'non-existing-id',

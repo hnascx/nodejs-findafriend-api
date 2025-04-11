@@ -1,3 +1,4 @@
+import { InvalidZipCodeError } from '@/use-cases/errors/invalid-zip-code-error'
 import axios from 'axios'
 
 interface ViaCepResponse {
@@ -14,7 +15,7 @@ export async function fetchCityAndStateByCep(
   )
 
   if (response.data.erro) {
-    throw new Error('ZIP code not found')
+    throw new InvalidZipCodeError()
   }
 
   return {
