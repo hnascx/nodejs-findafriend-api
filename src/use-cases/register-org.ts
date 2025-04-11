@@ -2,14 +2,13 @@ import type { OrgsRepository } from '@/repositories/orgs-repository'
 import { hash } from 'bcryptjs'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 import type { Org } from '@prisma/client'
+import { fetchCityAndStateByCep } from '@/utils/fetch-city-and-state-by-cep'
 
 interface RegisterOrgUseCaseRequest {
   name: string
   email: string
   zipCode: string
   address: string
-  city: string
-  state: string
   whatsapp: string
   password: string
 }
@@ -26,8 +25,6 @@ export class RegisterOrgUseCase {
     email,
     zipCode,
     address,
-    city,
-    state,
     whatsapp,
     password,
   }: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse> {
@@ -38,6 +35,8 @@ export class RegisterOrgUseCase {
     if (orgWithSameEmail) {
       throw new OrgAlreadyExistsError()
     }
+
+    const { city, state } = await fetchCityAndStateByCep(zipCode)
 
     const org = await this.orgRepository.create({
       name,
