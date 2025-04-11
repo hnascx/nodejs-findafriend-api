@@ -32,6 +32,8 @@ export class InMemoryOrgsRepository implements OrgsRepository {
       email: data.email,
       zip_code: data.zip_code,
       address: data.address,
+      city: data.city,
+      state: data.state,
       whatsapp: data.whatsapp,
       password_hash: data.password_hash,
       created_at: new Date(),

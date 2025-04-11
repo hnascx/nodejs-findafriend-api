@@ -8,6 +8,8 @@ interface RegisterOrgUseCaseRequest {
   email: string
   zipCode: string
   address: string
+  city: string
+  state: string
   whatsapp: string
   password: string
 }
@@ -24,6 +26,8 @@ export class RegisterOrgUseCase {
     email,
     zipCode,
     address,
+    city,
+    state,
     whatsapp,
     password,
   }: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse> {
@@ -40,6 +44,8 @@ export class RegisterOrgUseCase {
       email,
       zip_code: zipCode,
       address,
+      city,
+      state,
       whatsapp,
       password_hash,
     })

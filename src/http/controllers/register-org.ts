@@ -12,11 +12,13 @@ export async function registerOrg(
     email: z.string().email(),
     zipCode: z.string(),
     address: z.string(),
+    city: z.string(),
+    state: z.string().length(2),
     whatsapp: z.string().min(8),
     password: z.string().min(8),
   })
 
-  const { name, email, zipCode, address, whatsapp, password } =
+  const { name, email, zipCode, address, city, state, whatsapp, password } =
     registerBodySchema.parse(request.body)
 
   try {
@@ -27,6 +29,8 @@ export async function registerOrg(
       email,
       zipCode,
       address,
+      city,
+      state,
       whatsapp,
       password,
     })

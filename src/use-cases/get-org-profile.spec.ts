@@ -15,22 +15,24 @@ describe('Get Org Profile Use Case', () => {
 
   it('should be able to get org profile', async () => {
     const createdOrg = await orgsRepository.create({
-      name: 'John Doe',
-      email: 'VxH4d@example.com',
-      zip_code: '12345678',
-      address: '123 Main St',
-      whatsapp: '1234567890',
-      password_hash: await hash('12345678', 6),
+      name: 'Cãonil da Seda',
+      email: 'caonildaseda@gmail.com',
+      zip_code: '05885600',
+      address: 'Rua da Seda, 32',
+      city: 'São Paulo',
+      state: 'SP',
+      whatsapp: '11948275951',
+      password_hash: await hash('87654321', 6),
     })
 
     const { org } = await sut.execute({
       orgId: createdOrg.id,
     })
 
-    expect(org.name).toEqual('John Doe')
+    expect(org.name).toEqual('Cãonil da Seda')
   })
 
-  it('should not be able to get user profile with wrong id', async () => {
+  it('should not be able to get org profile with wrong id', async () => {
     expect(() =>
       sut.execute({
         orgId: 'non-existing-id',

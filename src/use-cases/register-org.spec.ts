@@ -15,11 +15,13 @@ describe('Register Org Use Case', () => {
 
   it('should be able to register', async () => {
     const { org } = await sut.execute({
-      name: 'John Doe',
-      email: 'VxH4d@example.com',
-      zipCode: '12345678',
-      address: '123 Main St',
-      whatsapp: '1234567890',
+      name: 'Cãonil da Seda',
+      email: 'caonildaseda@gmail.com',
+      zipCode: '05885600',
+      address: 'Rua da Seda, 32',
+      city: 'São Paulo',
+      state: 'SP',
+      whatsapp: '11948275951',
       password: '12345678',
     })
 
@@ -28,11 +30,13 @@ describe('Register Org Use Case', () => {
 
   it('should hash org password upon registration', async () => {
     const { org } = await sut.execute({
-      name: 'John Doe',
-      email: 'VxH4d@example.com',
-      zipCode: '12345678',
-      address: '123 Main St',
-      whatsapp: '1234567890',
+      name: 'Cãonil da Seda',
+      email: 'caonildaseda@gmail.com',
+      zipCode: '05885600',
+      address: 'Rua da Seda, 32',
+      city: 'São Paulo',
+      state: 'SP',
+      whatsapp: '11948275951',
       password: '12345678',
     })
 
@@ -45,24 +49,28 @@ describe('Register Org Use Case', () => {
   })
 
   it('should not be able to register with same email twice', async () => {
-    const email = 'VxH4d@example.com'
+    const email = 'caonildaseda@gmail.com'
 
     await sut.execute({
-      name: 'John Doe',
+      name: 'Cãonil da Seda',
       email,
-      zipCode: '12345678',
-      address: '123 Main St',
-      whatsapp: '1234567890',
+      zipCode: '05885600',
+      address: 'Rua da Seda, 32',
+      city: 'São Paulo',
+      state: 'SP',
+      whatsapp: '11948275951',
       password: '12345678',
     })
 
     await expect(() =>
       sut.execute({
-        name: 'John Doe',
+        name: 'Cãonil da Seda',
         email,
-        zipCode: '12345678',
-        address: '123 Main St',
-        whatsapp: '1234567890',
+        zipCode: '05885600',
+        address: 'Rua da Seda, 32',
+        city: 'São Paulo',
+        state: 'SP',
+        whatsapp: '11948275951',
         password: '12345678',
       }),
     ).rejects.toBeInstanceOf(OrgAlreadyExistsError)

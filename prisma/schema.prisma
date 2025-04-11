@@ -13,6 +13,8 @@ model Org {
   email         String   @unique
   zip_code      String
   address       String
+  city          String
+  state         String
   whatsapp      String
   password_hash String
   created_at    DateTime @default(now())

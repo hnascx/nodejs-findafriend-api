@@ -15,11 +15,13 @@ describe('Create Pet Register Use Case', () => {
 
     await orgsRepository.create({
       id: 'org-1',
-      name: 'John Doe',
-      email: 'VxH4d@example.com',
-      zip_code: '12345678',
-      address: '123 Main St',
-      whatsapp: '1234567890',
+      name: 'Cãonil da Seda',
+      email: 'caonildaseda@gmail.com',
+      zip_code: '05885600',
+      address: 'Rua da Seda, 32',
+      city: 'São Paulo',
+      state: 'SP',
+      whatsapp: '11948275951',
       password_hash: '12345678',
     })
   })
