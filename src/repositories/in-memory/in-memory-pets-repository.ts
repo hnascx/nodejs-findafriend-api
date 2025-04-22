@@ -1,6 +1,6 @@
 import { Pet } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
-import type { PetsRepository, CreatePetData } from '../pets-repository'
+import type { CreatePetData, PetsRepository } from '../pets-repository'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
@@ -13,6 +13,22 @@ export class InMemoryPetsRepository implements PetsRepository {
     }
 
     return pet
+  }
+
+  async findByCity(city: string): Promise<Pet[]> {
+    return this.items.filter(
+      (pet) => pet.org_id && this.getOrgCity(pet.org_id) === city,
+    )
+  }
+
+  private getOrgCity(org_id: string): string {
+    const orgCities: Record<string, string> = {
+      'org-1': 'São Paulo',
+      'org-2': 'Rio de Janeiro',
+      'org-3': 'Belo Horizonte',
+    }
+
+    return orgCities[org_id] || ''
   }
 
   async create(data: CreatePetData): Promise<Pet> {
