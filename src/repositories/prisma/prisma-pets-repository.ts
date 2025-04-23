@@ -1,15 +1,18 @@
 import { prisma } from '@/lib/prisma'
-import { Pet } from '@prisma/client'
-import { CreatePetData, PetsRepository } from '../pets-repository'
+import {
+  CreatePetData,
+  PetsRepository,
+  type FilterPetsData,
+} from '../pets-repository'
 
 export class PrismaPetsRepository implements PetsRepository {
-  async findById(id: string): Promise<Pet | null> {
+  async findById(id: string) {
     return prisma.pet.findUnique({
       where: { id },
     })
   }
 
-  async findByCity(city: string): Promise<Pet[]> {
+  async findByCity(city: string) {
     return prisma.pet.findMany({
       where: {
         org: {
@@ -22,7 +25,21 @@ export class PrismaPetsRepository implements PetsRepository {
     })
   }
 
-  async create(data: CreatePetData): Promise<Pet> {
+  findByCharacteristics(data: FilterPetsData) {
+    const { age, size, energy_level, independence_level, space_size } = data
+
+    return prisma.pet.findMany({
+      where: {
+        age,
+        size,
+        energy_level,
+        independence_level,
+        space_size,
+      },
+    })
+  }
+
+  async create(data: CreatePetData) {
     return prisma.pet.create({
       data: {
         name: data.name,
