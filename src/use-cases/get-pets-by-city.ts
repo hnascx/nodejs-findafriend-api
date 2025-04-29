@@ -4,6 +4,7 @@ import { CityIsRequiredError } from './errors/city-is-required-error'
 
 interface GetPetsByCityUseCaseRequest {
   city: string
+  page: number
 }
 
 interface GetPetsByCityUseCaseResponse {
@@ -15,12 +16,13 @@ export class GetPetsByCityUseCase {
 
   async execute({
     city,
+    page,
   }: GetPetsByCityUseCaseRequest): Promise<GetPetsByCityUseCaseResponse> {
     if (!city) {
       throw new CityIsRequiredError()
     }
 
-    const pets = await this.petsRepository.findByCity(city)
+    const pets = await this.petsRepository.findByCity(city, page)
 
     return { pets }
   }

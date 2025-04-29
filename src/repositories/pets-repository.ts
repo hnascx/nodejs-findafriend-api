@@ -1,9 +1,9 @@
 import {
-  Pet,
   Age,
-  Size,
   EnergyLevel,
   IndependenceLevel,
+  Pet,
+  Size,
   SpaceSize,
 } from '@prisma/client'
 
@@ -30,7 +30,7 @@ export type FilterPetsData = {
 
 export interface PetsRepository {
   findById(id: string): Promise<Pet | null>
-  findByCity(city: string): Promise<Pet[]>
-  findByCharacteristics(data: FilterPetsData): Promise<Pet[]>
+  findByCity(city: string, page: number): Promise<Pet[]>
+  findByCharacteristics(data: FilterPetsData, page: number): Promise<Pet[]>
   create(data: CreatePetData): Promise<Pet>
 }

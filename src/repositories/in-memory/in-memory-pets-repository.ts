@@ -19,10 +19,10 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findByCity(city: string) {
-    return this.items.filter(
-      (pet) => pet.org_id && this.getOrgCity(pet.org_id) === city,
-    )
+  async findByCity(city: string, page: number) {
+    return this.items
+      .filter((pet) => pet.org_id && this.getOrgCity(pet.org_id) === city)
+      .slice((page - 1) * 20, page * 20)
   }
 
   private getOrgCity(org_id: string) {
@@ -35,28 +35,32 @@ export class InMemoryPetsRepository implements PetsRepository {
     return orgCities[org_id] || ''
   }
 
-  async findByCharacteristics(data: FilterPetsData) {
+  async findByCharacteristics(data: FilterPetsData, page: number) {
     const { age, size, energy_level, independence_level, space_size } = data
 
-    return this.items.filter((pet) => {
-      const matchesAge = age ? pet.age === age : true
-      const matchesSize = size ? pet.size === size : true
-      const matchesEnergyLevel = energy_level
-        ? pet.energy_level === energy_level
-        : true
-      const matchesIndependenceLevel = independence_level
-        ? pet.independence_level === independence_level
-        : true
-      const matchesSpaceSize = space_size ? pet.space_size === space_size : true
+    return this.items
+      .filter((pet) => {
+        const matchesAge = age ? pet.age === age : true
+        const matchesSize = size ? pet.size === size : true
+        const matchesEnergyLevel = energy_level
+          ? pet.energy_level === energy_level
+          : true
+        const matchesIndependenceLevel = independence_level
+          ? pet.independence_level === independence_level
+          : true
+        const matchesSpaceSize = space_size
+          ? pet.space_size === space_size
+          : true
 
-      return (
-        matchesAge &&
-        matchesSize &&
-        matchesEnergyLevel &&
-        matchesIndependenceLevel &&
-        matchesSpaceSize
-      )
-    })
+        return (
+          matchesAge &&
+          matchesSize &&
+          matchesEnergyLevel &&
+          matchesIndependenceLevel &&
+          matchesSpaceSize
+        )
+      })
+      .slice((page - 1) * 20, page * 20)
   }
 
   async create(data: CreatePetData) {
