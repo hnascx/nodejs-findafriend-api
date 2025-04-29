@@ -35,12 +35,28 @@ describe('Get Pets By Characteristics Use Case', () => {
       adoption_requirements: ['Experienced owner'],
       org_id: 'org-2',
     })
+
+    for (let i = 0; i < 25; i++) {
+      petsRepository.create({
+        name: `Pet ${i + 1}`,
+        about: `Pet number ${i + 1}`,
+        age: 'ADULT',
+        size: 'MEDIUM',
+        energy_level: 'LOW',
+        independence_level: 'MEDIUM',
+        space_size: 'MEDIUM',
+        images_urls: [`https://example.com/pet-${i + 1}.jpg`],
+        adoption_requirements: [],
+        org_id: 'org-1',
+      })
+    }
   })
 
   it('should return pets filtered by specific characteristics', async () => {
     const { pets } = await sut.execute({
       age: 'PUPPY',
       size: 'SMALL',
+      page: 1,
     })
 
     expect(pets).toHaveLength(1)
@@ -56,6 +72,7 @@ describe('Get Pets By Characteristics Use Case', () => {
   it('should return pets filtered by a single characteristic', async () => {
     const { pets } = await sut.execute({
       energy_level: 'HIGH',
+      page: 1,
     })
 
     expect(pets).toHaveLength(1)
@@ -67,10 +84,10 @@ describe('Get Pets By Characteristics Use Case', () => {
     )
   })
 
-  it('should return all pets if no filters are applied', async () => {
-    const { pets } = await sut.execute({})
+  it('should return all pets if no filters are applied with pagination', async () => {
+    const { pets } = await sut.execute({ page: 1 })
 
-    expect(pets).toHaveLength(2)
+    expect(pets).toHaveLength(20)
     expect(pets).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: 'Buddy' }),
@@ -79,9 +96,22 @@ describe('Get Pets By Characteristics Use Case', () => {
     )
   })
 
+  it('should return the correct number of pets on the second page', async () => {
+    const { pets } = await sut.execute({ page: 2 })
+
+    expect(pets).toHaveLength(7) // for with 25 pets + 2 (Buddy and Max)
+    expect(pets).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'Pet 21' }),
+        expect.objectContaining({ name: 'Pet 25' }),
+      ]),
+    )
+  })
+
   it('should return an empty array if no pets match the criteria', async () => {
     const { pets } = await sut.execute({
       age: 'SENIOR',
+      page: 1,
     })
 
     expect(pets).toHaveLength(0)

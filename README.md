@@ -24,5 +24,5 @@ Find a Friend app.
 
 - [x] A senha da ORG precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [ ] A lista de pets precisa estar paginada com 20 itens por página;
+- [x] A lista de pets precisa estar paginada com 20 itens por página;
 - [ ] A ORG deve ser identificada por um JWT (JSON Web Token).    
