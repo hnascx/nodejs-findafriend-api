@@ -10,10 +10,6 @@ export class PrismaOrgsRepository implements OrgsRepository {
       },
     })
 
-    if (!org) {
-      return null
-    }
-
     return org
   }
 
