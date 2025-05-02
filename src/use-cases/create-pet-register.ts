@@ -12,7 +12,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface CreatePetRegisterUseCaseRequest {
   name: string
-  about: string
+  about: string | null
   age: Age
   size: Size
   energyLevel: EnergyLevel
