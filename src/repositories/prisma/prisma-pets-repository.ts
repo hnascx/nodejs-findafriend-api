@@ -1,9 +1,6 @@
 import { prisma } from '@/lib/prisma'
-import {
-  CreatePetData,
-  PetsRepository,
-  type FilterPetsData,
-} from '../pets-repository'
+import { Prisma } from '@prisma/client'
+import { FilterPetsData, PetsRepository } from '../pets-repository'
 
 export class PrismaPetsRepository implements PetsRepository {
   async findById(id: string) {
@@ -39,7 +36,7 @@ export class PrismaPetsRepository implements PetsRepository {
     })
   }
 
-  async create(data: CreatePetData) {
+  async create(data: Prisma.PetUncheckedCreateInput) {
     return prisma.pet.create({
       data: {
         name: data.name,

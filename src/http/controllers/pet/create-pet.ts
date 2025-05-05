@@ -27,8 +27,6 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     adoptionRequirements,
   } = createPetBodySchema.parse(request.body)
 
-  const { orgId } = request.user
-
   const createPetUseCase = makeCreatePetRegisterUseCase()
 
   await createPetUseCase.execute({
@@ -41,7 +39,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     spaceSize,
     imagesUrls,
     adoptionRequirements,
-    orgId,
+    orgId: request.user.sub,
   })
 
   return reply.status(201).send()
