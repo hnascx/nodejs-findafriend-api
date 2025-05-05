@@ -9,7 +9,7 @@ Find a Friend app.
 - [x] Deve ser possível filtrar pets por suas características;
 - [x] Deve ser possível visualizar detalhes de um pet para adoção;
 - [x] Deve ser possível se cadastrar como uma ORG;
-- [ ] Deve ser possível realizar login como uma ORG.
+- [x] Deve ser possível realizar login como uma ORG.
 
 ## RNs (Regras de negócio)
 
@@ -25,4 +25,4 @@ Find a Friend app.
 - [x] A senha da ORG precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [x] A lista de pets precisa estar paginada com 20 itens por página;
-- [ ] A ORG deve ser identificada por um JWT (JSON Web Token).    
+- [x] A ORG deve ser identificada por um JWT (JSON Web Token).    

@@ -12,6 +12,8 @@ interface GetPetProfileUseCaseResponse {
   pet: Pet
   org: {
     name: string
+    address: string
+    whatsapp: string
     whatsappButton: string
   }
 }
@@ -47,6 +49,8 @@ export class GetPetProfileUseCase {
       pet,
       org: {
         name: org.name,
+        address: org.address,
+        whatsapp: org.whatsapp,
         whatsappButton,
       },
     }
