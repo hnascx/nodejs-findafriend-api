@@ -19,6 +19,9 @@ export type FilterPetsData = {
 export interface PetsRepository {
   findById(id: string): Promise<Pet | null>
   findByCity(city: string, page: number): Promise<Pet[]>
-  findByCharacteristics(data: FilterPetsData, page: number): Promise<Pet[]>
+  findByCharacteristics(
+    data: FilterPetsData,
+    page: number,
+  ): Promise<{ name: string; imageUrl: string | null }[]>
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
 }

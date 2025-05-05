@@ -22,18 +22,27 @@ export class PrismaPetsRepository implements PetsRepository {
     })
   }
 
-  findByCharacteristics(data: FilterPetsData) {
-    const { age, size, energy_level, independence_level, space_size } = data
-
-    return prisma.pet.findMany({
+  async findByCharacteristics(data: FilterPetsData, page: number) {
+    const pets = await prisma.pet.findMany({
       where: {
-        age,
-        size,
-        energy_level,
-        independence_level,
-        space_size,
+        age: data.age,
+        size: data.size,
+        energy_level: data.energy_level,
+        independence_level: data.independence_level,
+        space_size: data.space_size,
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      select: {
+        name: true,
+        images_urls: true,
       },
     })
+
+    return pets.map((pet) => ({
+      name: pet.name,
+      imageUrl: pet.images_urls[0] || null,
+    }))
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {
