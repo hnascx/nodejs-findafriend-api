@@ -1,14 +1,14 @@
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { GetPetsByCharacteristicsUseCase } from './get-pets-by-characteristics'
+import { GetPetsByCityAndCharacteristicsUseCase } from './get-pets'
 
 let petsRepository: InMemoryPetsRepository
-let sut: GetPetsByCharacteristicsUseCase
+let sut: GetPetsByCityAndCharacteristicsUseCase
 
-describe('Get Pets By Characteristics Use Case', () => {
+describe('Get Pets By City and Characteristics Use Case', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
-    sut = new GetPetsByCharacteristicsUseCase(petsRepository)
+    sut = new GetPetsByCityAndCharacteristicsUseCase(petsRepository)
 
     petsRepository.create({
       name: 'Buddy',
@@ -52,68 +52,87 @@ describe('Get Pets By Characteristics Use Case', () => {
     }
   })
 
-  it('should return pets filtered by specific characteristics', async () => {
+  it('should return pets filtered by city only', async () => {
     const { pets } = await sut.execute({
-      age: 'PUPPY',
-      size: 'SMALL',
+      city: 'São Paulo',
       page: 1,
     })
-
-    expect(pets).toHaveLength(1)
-    expect(pets[0]).toEqual(
-      expect.objectContaining({
-        name: 'Buddy',
-        age: 'PUPPY',
-        size: 'SMALL',
-      }),
-    )
-  })
-
-  it('should return pets filtered by a single characteristic', async () => {
-    const { pets } = await sut.execute({
-      energy_level: 'HIGH',
-      page: 1,
-    })
-
-    expect(pets).toHaveLength(1)
-    expect(pets[0]).toEqual(
-      expect.objectContaining({
-        name: 'Buddy',
-        energy_level: 'HIGH',
-      }),
-    )
-  })
-
-  it('should return all pets if no filters are applied with pagination', async () => {
-    const { pets } = await sut.execute({ page: 1 })
 
     expect(pets).toHaveLength(20)
     expect(pets).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: 'Buddy' }),
-        expect.objectContaining({ name: 'Max' }),
-      ]),
+      expect.arrayContaining([expect.objectContaining({ name: 'Buddy' })]),
+    )
+  })
+
+  it('should return pets filtered by city and specific characteristics', async () => {
+    const { pets } = await sut.execute({
+      city: 'São Paulo',
+      filters: { age: 'PUPPY', size: 'SMALL' },
+      page: 1,
+    })
+
+    expect(pets).toHaveLength(1)
+    expect(pets[0]).toEqual(
+      expect.objectContaining({
+        name: 'Buddy',
+        imageUrl: 'https://example.com/buddy.jpg',
+      }),
+    )
+  })
+
+  it('should return pets filtered by city and a single characteristic', async () => {
+    const { pets } = await sut.execute({
+      city: 'São Paulo',
+      filters: { energy_level: 'HIGH' },
+      page: 1,
+    })
+
+    expect(pets).toHaveLength(1)
+    expect(pets[0]).toEqual(
+      expect.objectContaining({
+        name: 'Buddy',
+        imageUrl: 'https://example.com/buddy.jpg',
+      }),
     )
   })
 
   it('should return the correct number of pets on the second page', async () => {
-    const { pets } = await sut.execute({ page: 2 })
+    const { pets } = await sut.execute({
+      city: 'São Paulo',
+      page: 2,
+    })
 
-    expect(pets).toHaveLength(7) // for with 25 pets + 2 (Buddy and Max)
+    expect(pets).toHaveLength(6)
     expect(pets).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: 'Pet 21' }),
+        expect.objectContaining({ name: 'Pet 20' }),
         expect.objectContaining({ name: 'Pet 25' }),
       ]),
     )
   })
 
-  it('should return an empty array if no pets match the criteria', async () => {
+  it('should return no pets if city does not match', async () => {
     const { pets } = await sut.execute({
-      age: 'SENIOR',
+      city: 'Belo Horizonte',
       page: 1,
     })
 
     expect(pets).toHaveLength(0)
+  })
+
+  it('should return no pets if filters do not match', async () => {
+    const { pets } = await sut.execute({
+      city: 'São Paulo',
+      filters: { age: 'SENIOR' },
+      page: 1,
+    })
+
+    expect(pets).toHaveLength(0)
+  })
+
+  it('should throw an error if city is not provided', async () => {
+    await expect(sut.execute({ city: '', page: 1 })).rejects.toThrow(
+      'City is required',
+    )
   })
 })
