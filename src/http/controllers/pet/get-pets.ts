@@ -6,7 +6,7 @@ import { z } from 'zod'
 export async function getPets(request: FastifyRequest, reply: FastifyReply) {
   const getPetsQuerySchema = z.object({
     city: z.string(),
-    page: z.number().min(1).default(1),
+    page: z.coerce.number().min(1).default(1),
     age: z.enum(['PUPPY', 'ADULT', 'SENIOR']).optional(),
     size: z.enum(['SMALL', 'MEDIUM', 'LARGE']).optional(),
     energy_level: z.enum(['LOW', 'MEDIUM', 'HIGH']).optional(),
@@ -16,10 +16,12 @@ export async function getPets(request: FastifyRequest, reply: FastifyReply) {
 
   const query = getPetsQuerySchema.parse(request.query)
 
+  const { city, page, ...filters } = query
+
   try {
     const getPetsUseCase = makeGetPetsByCityAndCharacteristicsUseCase()
 
-    const { pets } = await getPetsUseCase.execute(query)
+    const { pets } = await getPetsUseCase.execute({ city, filters, page })
 
     return reply.status(200).send({ pets })
   } catch (error) {

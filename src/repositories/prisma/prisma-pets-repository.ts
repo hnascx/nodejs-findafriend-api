@@ -19,7 +19,11 @@ export class PrismaPetsRepository implements PetsRepository {
         org: {
           city,
         },
-        ...filters,
+        age: filters.age || undefined,
+        size: filters.size || undefined,
+        energy_level: filters.energy_level || undefined,
+        independence_level: filters.independence_level || undefined,
+        space_size: filters.space_size || undefined,
       },
       take: 20,
       skip: (page - 1) * 20,

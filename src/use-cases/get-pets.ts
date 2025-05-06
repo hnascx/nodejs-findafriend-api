@@ -26,9 +26,19 @@ export class GetPetsByCityAndCharacteristicsUseCase {
       throw new CityIsRequiredError()
     }
 
+    const { age, size, energy_level, independence_level, space_size } = filters
+
+    const preparedFilters: FilterPetsData = {
+      ...(age && { age }),
+      ...(size && { size }),
+      ...(energy_level && { energy_level }),
+      ...(independence_level && { independence_level }),
+      ...(space_size && { space_size }),
+    }
+
     const pets = await this.petsRepository.findByCityAndCharacteristics(
       city,
-      filters,
+      preparedFilters,
       page,
     )
 
