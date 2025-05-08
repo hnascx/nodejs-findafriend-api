@@ -4,7 +4,7 @@ Find a Friend app.
 
 ## RFs (Requisitos funcionais)
 
-- [x] Deve ser possível cadastrar pets;
+- [x] Deve ser possível cadastrar um pet;
 - [x] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
 - [x] Deve ser possível filtrar pets por suas características;
 - [x] Deve ser possível visualizar detalhes de um pet para adoção;
