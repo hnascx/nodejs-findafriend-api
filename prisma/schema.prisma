@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ORG
+  MEMBER
+}
+
 model Org {
   id            String   @id @default(uuid())
   name          String
@@ -17,6 +22,7 @@ model Org {
   state         String
   whatsapp      String
   password_hash String
+  role          Role     @default(MEMBER)
   created_at    DateTime @default(now())
 
   pets Pet[]

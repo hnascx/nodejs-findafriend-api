@@ -23,7 +23,9 @@ export async function authenticateOrg(
     })
 
     const token = await reply.jwtSign(
-      {},
+      {
+        role: org.role,
+      },
       {
         sign: {
           sub: org.id,
@@ -32,7 +34,9 @@ export async function authenticateOrg(
     )
 
     const refreshToken = await reply.jwtSign(
-      {},
+      {
+        role: org.role,
+      },
       {
         sign: {
           sub: org.id,

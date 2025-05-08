@@ -1,8 +1,8 @@
 import type { FastifyInstance } from 'fastify'
 import { verifyJWT } from '../../middlewares/verify-jwt'
-import { refresh } from './refresh'
 import { authenticateOrg } from './authenticate-org'
 import { profileOrg } from './profile-org'
+import { refresh } from './refresh'
 import { registerOrg } from './register-org'
 
 export async function orgRoutes(app: FastifyInstance) {
