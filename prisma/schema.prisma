@@ -22,7 +22,7 @@ model Org {
   state         String
   whatsapp      String
   password_hash String
-  role          Role     @default(MEMBER)
+  role          Role     @default(ORG)
   created_at    DateTime @default(now())
 
   pets Pet[]

@@ -42,6 +42,7 @@ describe('Get org profile (e2e)', () => {
       whatsapp: '123456789',
       city: expect.any(String),
       state: expect.any(String),
+      role: expect.stringContaining('ORG'),
       created_at: expect.any(String),
     })
   })
