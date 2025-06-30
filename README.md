@@ -1,28 +1,40 @@
-# App
+# Node.js Find a Friend API
 
-Find a Friend app.
+API developed to simulate the back-end of a pet adoption service.
 
-## RFs (Requisitos funcionais)
+### Functional Requirements (FRs)  
 
-- [x] Deve ser possível cadastrar um pet;
-- [x] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
-- [x] Deve ser possível filtrar pets por suas características;
-- [x] Deve ser possível visualizar detalhes de um pet para adoção;
-- [x] Deve ser possível se cadastrar como uma ORG;
-- [x] Deve ser possível realizar login como uma ORG.
+- It must be possible to register a pet.  
+- It must be possible to list all pets available for adoption in a city.  
+- It must be possible to filter pets by their characteristics.  
+- It must be possible to view details of a pet available for adoption.  
+- It must be possible to register as an ORG.  
+- It must be possible to log in as an ORG.  
 
-## RNs (Regras de negócio)
+### Business Rules (BRs)  
 
-- [x] Para listar os pets, obrigatoriamente precisamos informar a cidade;
-- [x] Uma ORG precisa ter um endereço e um número de WhatsApp;
-- [x] Um pet deve estar ligado a uma ORG;
-- [x] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp;
-- [x] Todos os filtros, além da cidade, são opcionais;
-- [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada.
+- To list pets, the city must be provided.  
+- An ORG must have an address and a WhatsApp number.  
+- A pet must be associated with an ORG.  
+- Users who want to adopt will contact the ORG via WhatsApp.  
+- All filters, except for the city, are optional.  
+- To access the application as an admin, an ORG must be logged in.  
 
-## RNFs (Requisitos não-funcionais)
+### Non-functional Requirements (NFRs)  
 
-- [x] A senha da ORG precisa estar criptografada;
-- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [x] A lista de pets precisa estar paginada com 20 itens por página;
-- [x] A ORG deve ser identificada por um JWT (JSON Web Token).    
+- The ORG's password must be encrypted.  
+- Application data must be persisted in a PostgreSQL database.  
+- The pet list must be paginated with 20 items per page.  
+- The ORG must be identified using a JWT (JSON Web Token).  
+
+Technologies used: Fastify as the framework, Prisma as the ORM, Axios, Zod for form validation, PostgreSQL as the database, Docker, and Vitest for unit and E2E testing.
+
+### Installation
+`npm i`
+
+### Running
+`npm run dev`
+
+### Testing
+`npm run test` (For unit tests)
+`npm run test:e2e` (For E2E tests)
