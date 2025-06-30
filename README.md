@@ -39,3 +39,6 @@ Technologies used: Fastify as the framework, Prisma as the ORM, Axios, Zod for f
 `npm run test` (For unit tests)
 
 `npm run test:e2e` (For E2E tests)
+
+### Docker
+`docker-compose up`
