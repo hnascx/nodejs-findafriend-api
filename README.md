@@ -27,7 +27,7 @@ API developed to simulate the back-end of a pet adoption service.
 - The pet list must be paginated with 20 items per page.  
 - The ORG must be identified using a JWT (JSON Web Token).  
 
-Technologies used: Fastify as the framework, Prisma as the ORM, Axios, Zod for form validation, PostgreSQL as the database, Docker, and Vitest for unit and E2E testing.
+Technologies used: Fastify as the framework, Prisma as the ORM, Axios, Zod for form validation, PostgreSQL as the database, Docker, and Vitest for unit and E2E testing. CI/CD implemented using Github Actions.
 
 ### Installation
 `npm i`
